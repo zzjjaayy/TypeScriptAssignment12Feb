@@ -5,55 +5,40 @@ interface Activity {
 }
 
 enum Type {
-    educational,
+    education,
     social,
     cooking, 
     relaxation,
     recreational
 }
-document.addEventListener('DOMContentLoaded', init, false);
 
-function init() {
-    fun(Type.social);
-    document.getElementById(Type[Type.educational])?.addEventListener("click", () => {
-        fun(Type.educational)
-    });
-    document.getElementById(Type[Type.social])?.addEventListener("click", () => {
-        fun(Type.social)
-    });
-    document.getElementById(Type[Type.cooking])?.addEventListener("click", () => {
-        fun(Type.cooking)
-    });
-    document.getElementById(Type[Type.relaxation])?.addEventListener("click", () => {
-        fun(Type.relaxation)
-    });
-    document.getElementById(Type[Type.recreational])?.addEventListener("click", () => {
-        fun(Type.recreational)
-    });
-};
+document.addEventListener('DOMContentLoaded', () => {
+    getNewActivity(Type.social);
+    for(let i = 0; i < 5; i++) {
+        document.getElementById(Type[i])?.addEventListener("click", () => {
+            getNewActivity(Type[Type[i]])
+        });
+    }
+}, false);
 
-async function getActivity(type: Type): Promise<JSON> {
+async function fetchActivity(type: Type): Promise<JSON> {
     const url = new URL('http://www.boredapi.com/api/activity?type='+Type[type]);
     const response = await fetch( url.toString() );
     return await response.json();
 };
 
-async function fun(type: Type) {
-    const obj = await getActivity( type );
-    console.log(obj)
+async function getNewActivity(type: Type) {
+    const obj = await fetchActivity(type);
     let act: Activity = {
         title: obj["activity"],
         participants: obj["participants"],
         type: obj["type"] as Type
     }
-    console.log(act.participants);
-    console.log(act.title);
-    console.log(act.type);
     setupTitle(act);
 };
 
 function setupTitle(activity: Activity) {
-    document.getElementById("title").innerHTML = activity.title;
+    document.getElementById("title").innerHTML = "\"" + activity.title + "\"";
 }
 
 console.log("meow");

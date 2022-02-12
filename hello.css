@@ -95,9 +95,9 @@ body {
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
 
-.wrapper .educational:hover,
-.wrapper .educational:hover .tooltip,
-.wrapper .educational:hover .tooltip::before {
+.wrapper .education:hover,
+.wrapper .education:hover .tooltip,
+.wrapper .education:hover .tooltip::before {
   background-color: #3b5999;
   color: #ffffff;
 }
